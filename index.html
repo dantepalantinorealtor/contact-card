@@ -9,45 +9,51 @@
 <body class="bg-gray-100">
 
   <div class="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl overflow-hidden">
+    
+    <!-- Header / Profile Section -->
     <div class="bg-gradient-to-r from-pink-600 to-blue-600 text-center py-10">
-      <img src="profileimage.jpg" alt="Profile photo of Dante Palantino" loading="lazy" class="w-24 h-24 rounded-full mx-auto border-4 border-white">
-      <h1 class="text-white text-2xl font-semibold mt-4">Dante Palantino</h1>
-      <div class="flex justify-center mt-3 space-x-4">
-        <a href="tel:2679800823" class="bg-white/20 p-3 rounded-full hover:bg-white/30">
+      <img src="profileimage.jpg" alt="Profile photo of Dante Palantino" loading="lazy" class="w-28 h-28 rounded-full mx-auto border-4 border-white">
+      <h1 class="text-white text-3xl font-semibold mt-4">Dante Palantino</h1>
+      <div class="flex justify-center mt-4 space-x-4">
+        <a href="tel:2679800823" class="bg-white/20 p-3 rounded-full hover:bg-white/30 transition">
           📞
         </a>
-        <a href="mailto:dantejpalantino@gmail.com" class="bg-white/20 p-3 rounded-full hover:bg-white/30">
+        <a href="mailto:dantejpalantino@gmail.com" class="bg-white/20 p-3 rounded-full hover:bg-white/30 transition">
           ✉️
         </a>
       </div>
     </div>
 
+    <!-- Main Content -->
     <div class="p-6 text-center">
-      <p class="text-gray-700 mb-4">Helping with all your real estate needs from the Block to the Beach</p>
+      <p class="text-gray-700 mb-6">Helping with all your real estate needs from the Block to the Beach</p>
 
-      <div class="text-left space-y-3">
+      <!-- Contact Info -->
+      <div class="text-left space-y-4">
         <div class="flex items-center">
-          <span class="mr-3">📞</span>
-          <span class="text-gray-800">267-980-0823</span>
+          <span class="mr-3 text-xl">📞</span>
+          <span class="text-gray-800 font-medium">267-980-0823</span>
         </div>
         <div class="flex items-center">
-          <span class="mr-3">📧</span>
-          <span class="text-gray-800">dantejpalantino@gmail.com</span>
+          <span class="mr-3 text-xl">📧</span>
+          <span class="text-gray-800 font-medium">dantejpalantino@gmail.com</span>
         </div>
         <div class="flex items-center">
-          <span class="mr-3">🏢</span>
-          <span class="text-gray-800">RE/MAX One Realty</span>
+          <span class="mr-3 text-xl">🏢</span>
+          <span class="text-gray-800 font-medium">RE/MAX One Realty</span>
         </div>
       </div>
 
+      <!-- Instagram Button -->
       <div class="mt-6">
-        <a href="https://instagram.com/dantepalantinorealtor" target="_blank" class="flex items-center justify-center border border-gray-300 rounded-xl py-2 hover:bg-gray-50" rel="noopener noreferrer">
+        <a href="https://instagram.com/dantepalantinorealtor" target="_blank" rel="noopener noreferrer"
+           class="flex items-center justify-center border border-gray-300 rounded-xl py-2 px-4 hover:bg-gray-50 transition">
           <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-6 h-6 mr-2" alt="Instagram"> Instagram
         </a>
       </div>
 
+      <!-- Add Contact Button -->
       <div class="mt-6">
-        <!-- Removed download attribute. The script below intercepts clicks on iOS and opens the raw vCard content in a way iOS handles as a contact import (data/blob URL) instead of triggering a file download. -->
         <a href="add-contact.html" class="inline-block w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition">
           Add Contact
         </a>
@@ -55,68 +61,37 @@
     </div>
   </div>
 
+  <!-- iOS vCard Handling Script -->
   <script>
     (function () {
       var link = document.getElementById('vcfLink');
       if (!link) return;
 
-      // iOS detection: iPhone / iPad / iPod + WebKit + not Windows
       function isIOS() {
         return /iP(hone|od|ad)/.test(navigator.userAgent) && /WebKit/.test(navigator.userAgent) && !window.MSStream;
       }
 
       link.addEventListener('click', function (e) {
-        if (!isIOS()) {
-          // Let non-iOS browsers handle the link normally (they may download the .vcf file).
-          return;
-        }
+        if (!isIOS()) return;
 
         e.preventDefault();
-
         var vcfUrl = link.href;
 
-        // Try to fetch the vCard and open it as a blob/data URL which iOS Safari will hand off to Contacts
         fetch(vcfUrl, { cache: 'no-store' })
-          .then(function (resp) {
-            if (!resp.ok) throw new Error('Network response was not ok');
-            return resp.blob().catch(function () { return resp.text().then(function (t) { return new Blob([t], { type: 'text/vcard' }); }); });
-          })
-          .then(function (blob) {
-            // Ensure the blob has a reasonable type; some hosts return application/octet-stream
+          .then(resp => resp.blob().catch(() => resp.text().then(t => new Blob([t], { type: 'text/vcard' }))))
+          .then(blob => {
             if (!blob.type || blob.type === 'application/octet-stream') {
-              try {
-                // Some environments allow changing blob's type via slicing
-                blob = blob.slice(0, blob.size, 'text/vcard');
-              } catch (err) {
-                // ignore and continue
-              }
+              try { blob = blob.slice(0, blob.size, 'text/vcard'); } catch (err) {}
             }
-
-            // First attempt: use an object URL
             var objectUrl = URL.createObjectURL(blob);
-            // Navigating to the object URL usually triggers the Contacts import UI on iOS
             window.location.href = objectUrl;
-
-            // Revoke after a bit to allow navigation to begin
-            setTimeout(function () { try { URL.revokeObjectURL(objectUrl); } catch (e) {} }, 15000);
+            setTimeout(() => { try { URL.revokeObjectURL(objectUrl); } catch (e) {} }, 15000);
           })
-          .catch(function () {
-            // Fallback: try data URL (encoded text)
-            fetch(vcfUrl, { cache: 'no-store' })
-              .then(function (r) { return r.text(); })
-              .then(function (text) {
-                try {
-                  var dataUrl = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text);
-                  window.location.href = dataUrl;
-                } catch (err) {
-                  // Last resort: open raw link in a new tab/window
-                  window.open(vcfUrl, '_blank');
-                }
-              })
-              .catch(function () {
-                // If everything fails, open the raw link
-                window.open(vcfUrl, '_blank');
-              });
+          .catch(() => {
+            fetch(vcfUrl, { cache: 'no-store' }).then(r => r.text()).then(text => {
+              try { window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text); }
+              catch { window.open(vcfUrl, '_blank'); }
+            });
           });
       }, false);
     })();
