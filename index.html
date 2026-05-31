@@ -1,126 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dante Palantino - Contact</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:      #D4B57F;
+      --gold-soft: rgba(212, 181, 127, 0.18);
+      --gold-line: rgba(212, 181, 127, 0.28);
+      --bg:        #0B1A2E;
+      --bg-2:      #0E2138;
+      --card:      #0f1f35;
+      --text:      #E9E4DA;
+      --muted:     rgba(233, 228, 218, 0.55);
+    }
+
+    body {
+      background: var(--bg);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Card shell ── */
+    .card {
+      max-width: 420px;
+      margin: 40px auto;
+      background: var(--card);
+      border: 1px solid var(--gold-line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0e2a4a 0%, #0B1A2E 60%, #162d4e 100%);
+      text-align: center;
+      padding: 40px 24px 32px;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold-line);
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      margin: 0 auto 16px;
+      display: block;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 28px;
+      letter-spacing: 0.07em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .header-actions a {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-soft);
+      border: 1px solid var(--gold-line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .header-actions a:hover { background: rgba(212, 181, 127, 0.3); }
+
+    .header-actions svg {
+      width: 16px; height: 16px;
+      stroke: var(--gold); fill: none;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+
+    /* ── Body ── */
+    .body { padding: 24px; }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* ── Rows ── */
+    .rows { display: flex; flex-direction: column; gap: 0; }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(233, 228, 218, 0.07);
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .row:last-child { border-bottom: none; }
+
+    .row-icon {
+      font-size: 18px;
+      width: 28px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .row-text {
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── Links / CTAs ── */
+    .links { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--gold-line);
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover { background: var(--gold-soft); }
+
+    .btn-secondary img { width: 20px; height: 20px; border-radius: 4px; }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--gold);
+      color: #0B1A2E;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: #e8ca9a; }
+  </style>
 </head>
-<body class="bg-gray-100">
+<body>
 
-  <div class="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl overflow-hidden">
-    <div class="bg-gradient-to-r from-pink-600 to-blue-600 text-center py-10">
-      <img src="profileimage.png" alt="Profile photo of Dante Palantino" loading="lazy" class="w-24 h-24 rounded-full mx-auto border-4 border-white">
-      <h1 class="text-white text-2xl font-semibold mt-4">Dante Palantino</h1>
-      <div class="flex justify-center mt-3 space-x-4">
-        <a href="tel:2679800823" class="bg-white/20 p-3 rounded-full hover:bg-white/30">
-          📞
-        </a>
-        <a href="mailto:dantejpalantino@gmail.com" class="bg-white/20 p-3 rounded-full hover:bg-white/30">
-          ✉️
-        </a>
-      </div>
-    </div>
+<div class="card">
 
-    <div class="p-6 text-center">
-      <p class="text-gray-700 mb-4">Helping with all your real estate needs from the Block to the Beach</p>
-
-      <div class="text-left space-y-3">
-        <div class="flex items-center">
-          <span class="mr-3">📞</span>
-          <span class="text-gray-800">267-980-0823</span>
-        </div>
-        <div class="flex items-center">
-          <span class="mr-3">📧</span>
-          <span class="text-gray-800">dantejpalantino@gmail.com</span>
-        </div>
-        <div class="flex items-center">
-          <span class="mr-3">🏢</span>
-          <span class="text-gray-800">RE/MAX One Realty</span>
-        </div>
-      </div>
-
-      <div class="mt-6">
-        <a href="https://instagram.com/dantepalantinorealtor" target="_blank" class="flex items-center justify-center border border-gray-300 rounded-xl py-2 hover:bg-gray-50" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" class="w-6 h-6 mr-2" alt="Instagram"> Instagram
-        </a>
-      </div>
-
-      <div class="mt-6">
-        <!-- Removed download attribute. The script below intercepts clicks on iOS and opens the raw vCard content in a way iOS handles as a contact import (data/blob URL) instead of triggering a file download. -->
-        <a id="vcfLink" href="https://raw.githubusercontent.com/dantepalantinorealtor/contact-card/main/DantePalantino.vcf" class="inline-block w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition" rel="noopener noreferrer">
-          Add Contact
-        </a>
-      </div>
+  <!-- Header -->
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/dantepalantinorealtor/contact-card/main/profileimage.png" alt="Dante Palantino" class="avatar"
+         onerror="this.style.opacity='0'">
+    <h1>Dante Palantino</h1>
+    <p class="subtitle">Realtor &nbsp;·&nbsp; Palantino · RE/MAX One</p>
+    <div class="header-actions">
+      <a href="tel:2679800823" aria-label="Call">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </a>
+      <a href="mailto:dantejpalantino@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+      <a href="https://instagram.com/dantepalantinorealtor" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--gold)" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="var(--gold)" stroke="none"/></svg>
+      </a>
     </div>
   </div>
 
-  <script>
-    (function () {
-      var link = document.getElementById('vcfLink');
-      if (!link) return;
+  <!-- Body -->
+  <div class="body">
+    <p class="tagline">Helping with all your real estate needs<br>from the Block to the Beach.</p>
 
-      // iOS detection: iPhone / iPad / iPod + WebKit + not Windows
-      function isIOS() {
-        return /iP(hone|od|ad)/.test(navigator.userAgent) && /WebKit/.test(navigator.userAgent) && !window.MSStream;
-      }
+    <div class="rows">
+      <div class="row">
+        <span class="row-icon">📞</span>
+        <span class="row-text">267-980-0823</span>
+      </div>
+      <div class="row">
+        <span class="row-icon">📧</span>
+        <span class="row-text">dantejpalantino@gmail.com</span>
+      </div>
+      <div class="row">
+        <span class="row-icon">🏢</span>
+        <span class="row-text">RE/MAX One Realty</span>
+      </div>
+    </div>
 
-      link.addEventListener('click', function (e) {
-        if (!isIOS()) {
-          // Let non-iOS browsers handle the link normally (they may download the .vcf file).
-          return;
+    <div class="links">
+      <a id="vcfLink"
+         href="https://raw.githubusercontent.com/dantepalantinorealtor/contact-card/main/Dante_Palantino.vcf"
+         class="btn-primary"
+         rel="noopener noreferrer">
+        Add Contact
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var link = document.getElementById('vcfLink');
+  if (!link) return;
+
+  function isIOS() {
+    return /iP(hone|od|ad)/.test(navigator.userAgent) && /WebKit/.test(navigator.userAgent) && !window.MSStream;
+  }
+
+  link.addEventListener('click', function (e) {
+    if (!isIOS()) return;
+    e.preventDefault();
+    var vcfUrl = link.href;
+
+    fetch(vcfUrl, { cache: 'no-store' })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error('Network response was not ok');
+        return resp.blob().catch(function () {
+          return resp.text().then(function (t) { return new Blob([t], { type: 'text/vcard' }); });
+        });
+      })
+      .then(function (blob) {
+        if (!blob.type || blob.type === 'application/octet-stream') {
+          try { blob = blob.slice(0, blob.size, 'text/vcard'); } catch (err) {}
         }
-
-        e.preventDefault();
-
-        var vcfUrl = link.href;
-
-        // Try to fetch the vCard and open it as a blob/data URL which iOS Safari will hand off to Contacts
+        var objectUrl = URL.createObjectURL(blob);
+        window.location.href = objectUrl;
+        setTimeout(function () { try { URL.revokeObjectURL(objectUrl); } catch (e) {} }, 15000);
+      })
+      .catch(function () {
         fetch(vcfUrl, { cache: 'no-store' })
-          .then(function (resp) {
-            if (!resp.ok) throw new Error('Network response was not ok');
-            return resp.blob().catch(function () { return resp.text().then(function (t) { return new Blob([t], { type: 'text/vcard' }); }); });
+          .then(function (r) { return r.text(); })
+          .then(function (text) {
+            try {
+              window.location.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text);
+            } catch (err) { window.open(vcfUrl, '_blank'); }
           })
-          .then(function (blob) {
-            // Ensure the blob has a reasonable type; some hosts return application/octet-stream
-            if (!blob.type || blob.type === 'application/octet-stream') {
-              try {
-                // Some environments allow changing blob's type via slicing
-                blob = blob.slice(0, blob.size, 'text/vcard');
-              } catch (err) {
-                // ignore and continue
-              }
-            }
-
-            // First attempt: use an object URL
-            var objectUrl = URL.createObjectURL(blob);
-            // Navigating to the object URL usually triggers the Contacts import UI on iOS
-            window.location.href = objectUrl;
-
-            // Revoke after a bit to allow navigation to begin
-            setTimeout(function () { try { URL.revokeObjectURL(objectUrl); } catch (e) {} }, 15000);
-          })
-          .catch(function () {
-            // Fallback: try data URL (encoded text)
-            fetch(vcfUrl, { cache: 'no-store' })
-              .then(function (r) { return r.text(); })
-              .then(function (text) {
-                try {
-                  var dataUrl = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(text);
-                  window.location.href = dataUrl;
-                } catch (err) {
-                  // Last resort: open raw link in a new tab/window
-                  window.open(vcfUrl, '_blank');
-                }
-              })
-              .catch(function () {
-                // If everything fails, open the raw link
-                window.open(vcfUrl, '_blank');
-              });
-          });
-      }, false);
-    })();
-  </script>
+          .catch(function () { window.open(vcfUrl, '_blank'); });
+      });
+  }, false);
+})();
+</script>
 
 </body>
 </html>
